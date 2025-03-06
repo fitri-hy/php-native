@@ -193,3 +193,5 @@ return $this->view('pages/home', [
 	'rate_limiting' => true,
 ],
 ```
+
+<img src="./public/images/ss.png" />
