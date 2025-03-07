@@ -6,7 +6,7 @@ Keep it simple and fast. Build scalable applications with a lightweight PHP fram
 
 ### Folder Structure
 
-```
+```bash
 php/
 │── app/
 │   ├── Controllers/
@@ -146,7 +146,7 @@ public function delete($id) {
 
 ### Generate & Verification CSRF Input (View)
 
-```
+```php
 // Generate in Form
 <?php use Core\Security; ?>
 ...
@@ -178,7 +178,7 @@ use Core\Security;
 ```php
 return $this->view('pages/home', 
   [
-  'title' => 'Home'
+    'title' => 'Home'
   ], false);
 ```
 
