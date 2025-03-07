@@ -69,11 +69,12 @@ php/
 use Core\Database;
 
 public function Example() {
-    $data = Database::fetchAll("SELECT * FROM table_name");
-	return $this->view('pages/home', [
-		'data' => $data, 
-		'title' => 'Example Pages'
-	]);
+  $data = Database::fetchAll("SELECT * FROM table_name");
+  return $this->view('pages/home', 
+  [
+    'data' => $data, 
+    'title' => 'Example Pages'
+  ]);
 }
 ```
 
@@ -83,15 +84,15 @@ public function Example() {
 use Core\Database;
 
 public function example($id) {
-    $data = Database::fetch("SELECT * FROM table_name WHERE id = :id", ['id' => $id]);
-	if (!$data) {
-		header("Location: /error");
-		exit;
-	}
-	return $this->view('pages/home', [
-		'data' => $data,
-		'title' => 'Example Page'
-	]);
+  $data = Database::fetch("SELECT * FROM table_name WHERE id = :id", ['id' => $id]);
+  if (!$data) {
+    header("Location: /error");
+    exit;
+  }
+  return $this->view('pages/home', [
+    'data' => $data,
+    'title' => 'Example Page'
+  ]);
 }
 ```
 
@@ -101,13 +102,14 @@ public function example($id) {
 use Core\Database;
 
 public function Example() {
-	if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['form_column_name'])) {
-		Database::execute("INSERT INTO table_name (column_name) VALUES (:column_name)", [
-			'column_name' => htmlspecialchars(trim($_POST['form_column_name']))
-		]);
-	}
-	header("Location: /");
-	exit;
+  if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['form_column_name'])) {
+    Database::execute("INSERT INTO table_name (column_name) VALUES (:column_name)", 
+    [
+    'column_name' => htmlspecialchars(trim($_POST['form_column_name']))
+    ]);
+  }
+  header("Location: /");
+  exit;
 }
 ```
 
@@ -117,15 +119,16 @@ public function Example() {
 use Core\Database;
 
 public function update($id) {
-	if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return;
-	}
-	Database::execute("UPDATE table_name SET column_name = :column_name WHERE id = :id", [
-		'column_name' => htmlspecialchars(trim($_POST['form_column_name'])),
-		'id' => $id
-	]);
-	header("Location: /");
-	exit;
+  if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    return;
+  }
+  Database::execute("UPDATE table_name SET column_name = :column_name WHERE id = :id", 
+  [
+    'column_name' => htmlspecialchars(trim($_POST['form_column_name'])),
+    'id' => $id
+  ]);
+  header("Location: /");
+  exit;
 }
 ```
 
@@ -135,9 +138,9 @@ public function update($id) {
 use Core\Database;
 
 public function delete($id) {
-	Database::execute("DELETE FROM table_name WHERE id = :id", ['id' => $id]);
-	header("Location: /");
-	exit;
+  Database::execute("DELETE FROM table_name WHERE id = :id", ['id' => $id]);
+  header("Location: /");
+  exit;
 }
 ```
 
@@ -154,7 +157,9 @@ public function delete($id) {
 use Core\Security;
 ...
 if ($_SERVER["REQUEST_METHOD"] !== "POST" || !Security::verifyCsrfToken($_POST['csrf_token'] ?? '')) {
-	die("Invalid CSRF Token!");
+  $_SESSION['error'] = "Invalid CSRF Token!";
+  header("Location: /error");
+  exit;
 }
 ...
 ```
@@ -171,19 +176,20 @@ use Core\Security;
 ### Disable display layout, add 'false' to disable layout usage
 
 ```php
-return $this->view('pages/home', [
-	'title' => 'Home'
-	], false);
+return $this->view('pages/home', 
+  [
+  'title' => 'Home'
+  ], false);
 ```
 
 ### Set up a database connection in /config/config.php
 
 ```php
 'db' => [
-	'host' => 'localhost',
-	'dbname' => 'demo',
-	'user' => 'root',
-	'pass' => ''
+  'host' => 'localhost',
+  'dbname' => 'demo',
+  'user' => 'root',
+  'pass' => ''
 ],
 ```
 
@@ -191,7 +197,7 @@ return $this->view('pages/home', [
 
 ```php
 'api' => [
-	'api_key' => 'example-api-key-here',
+  'api_key' => 'example-api-key-here',
 ]
 ```
 
@@ -199,16 +205,16 @@ return $this->view('pages/home', [
 
 ```php
 'security' => [
-	'csrf_protection' => true,
-	'session_security' => true,
-	'rate_limiting' => true,
-	'security_headers' => true,
-	'headers' => [
-		'X-Frame-Options'            => 'DENY',
-		'X-XSS-Protection'           => '1; mode=block',
-		'X-Content-Type-Options'     => 'nosniff',
-		'Referrer-Policy'            => 'no-referrer-when-downgrade',
-		'Strict-Transport-Security'  => 'max-age=31536000; includeSubDomains; preload',
-	],
+  'csrf_protection' => true,
+  'session_security' => true,
+  'rate_limiting' => true,
+  'security_headers' => true,
+  'headers' => [
+    'X-Frame-Options'            => 'DENY',
+    'X-XSS-Protection'           => '1; mode=block',
+    'X-Content-Type-Options'     => 'nosniff',
+    'Referrer-Policy'            => 'no-referrer-when-downgrade',
+    'Strict-Transport-Security'  => 'max-age=31536000; includeSubDomains; preload',
+  ],
 ],
 ```
