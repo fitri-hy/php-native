@@ -2,6 +2,8 @@
 
 Keep it simple and fast. Build scalable applications with a lightweight PHP framework that’s purely native, with no extra overhead. 
 
+<img src="./public/images/ss.png" />
+
 ### Folder Structure
 
 ```
@@ -139,12 +141,21 @@ public function delete($id) {
 }
 ```
 
-### Generate CSRF Input (View)
+### Generate & Verification CSRF Input (View)
 
 ```
+// Generate in Form
 <?php use Core\Security; ?>
 ...
 <input type="hidden" name="csrf_token" value="<?= Security::generateCsrfToken() ?>">
+...
+
+// Verification in Controller
+use Core\Security;
+...
+if ($_SERVER["REQUEST_METHOD"] !== "POST" || !Security::verifyCsrfToken($_POST['csrf_token'] ?? '')) {
+	die("Invalid CSRF Token!");
+}
 ...
 ```
 
@@ -191,7 +202,13 @@ return $this->view('pages/home', [
 	'csrf_protection' => true,
 	'session_security' => true,
 	'rate_limiting' => true,
+	'security_headers' => true,
+	'headers' => [
+		'X-Frame-Options'            => 'DENY',
+		'X-XSS-Protection'           => '1; mode=block',
+		'X-Content-Type-Options'     => 'nosniff',
+		'Referrer-Policy'            => 'no-referrer-when-downgrade',
+		'Strict-Transport-Security'  => 'max-age=31536000; includeSubDomains; preload',
+	],
 ],
 ```
-
-<img src="./public/images/ss.png" />

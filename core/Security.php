@@ -77,6 +77,15 @@ class Security {
             $_SESSION['rate_limit_timestamp'] = time();
         }
     }
+	
+	public static function applySecureHeaders() {
+        if (empty(self::$config['security']['security_headers']) || empty(self::$config['security']['headers'])) {
+            return;
+        }
+        foreach (self::$config['security']['headers'] as $header => $value) {
+            header("$header: $value");
+        }
+    }
 }
 
 Security::init();

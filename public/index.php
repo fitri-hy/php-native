@@ -10,6 +10,9 @@ require_once __DIR__ . '/../core/Router.php';
 require_once __DIR__ . '/../app/Routes/Web.php';
 require_once __DIR__ . '/../app/Routes/Api.php';
 
+use Core\Security;
+Security::applySecureHeaders();
+
 use Core\Cors;
 Cors::applyCors();
 
