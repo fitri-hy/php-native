@@ -2,6 +2,12 @@
 
 Keep it simple and fast. Build scalable applications with a lightweight PHP framework that’s purely native, with no extra overhead. 
 
+### Getting Variants
+
+```bash
+npx create-php-native
+```
+
 <img src="./public/images/ss.png" />
 
 ### Folder Structure
